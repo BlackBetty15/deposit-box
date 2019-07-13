@@ -9,10 +9,8 @@ class App extends Component {
   render() {
     return (
       <div className="content">
-            <Display/>
-        <div className="keyboard">
-            <Keyboard />
-        </div>
+        <Display/>
+        <Keyboard />
         <p className="align--right text--small">S/N:{this.state.serial}</p>
       </div>
     );

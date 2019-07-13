@@ -79,8 +79,12 @@ class Keyboard extends Component {
     render(){
         console.log(this.props);
         return (
-            this.state.button.reverse().map((item) =>
-            <Button key={item.id} content={item} />)
+            <div className="keyboard">
+                {
+                    this.state.button.reverse().map((item) =>
+                    <Button key={item.id} content={item} />)
+                }
+            </div>
         );
     }
 }
