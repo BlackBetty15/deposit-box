@@ -1,0 +1,29 @@
+body {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: $color-text-screen;
+}
+
+.text {
+  &--regular {
+    font-size: 16px;
+  }
+
+  &--small {
+    font-size: 12px;
+  }
+
+  &--xsmall {
+    font-size: 10px;
+  }
+
+  &--large {
+    font-size: 45px;
+  }
+
+  &--xlarge {
+    font-size: 55px;
+  }
+}

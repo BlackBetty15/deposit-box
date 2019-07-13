@@ -1,0 +1,35 @@
+body {
+  background-color: $color-gray-body;
+  font-size: 16px;
+}
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content {
+  width: 450px;
+  max-width: 95%;
+  padding: 30px 50px 0;
+  background-color: $color-gray-panel;
+  margin: 0 auto;
+  border: 2px solid #000;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.align {
+  &--left {
+    text-align: left;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+  &--center {
+    text-align: center;
+  }
+}
