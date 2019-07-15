@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
-import display from "./reducers/displayReducer";
+import { createStore, CombinedReducers } from 'redux';
+import displayReducer from "./reducers/displayReducer";
 
-export default createStore(display,{});
+export default createStore(displayReducer);

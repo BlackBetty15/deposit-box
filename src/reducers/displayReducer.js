@@ -1,35 +1,44 @@
-const displayReducer = ( state = {
-    lockStatusList: {
-        0: 'Locked',
-        1: 'Unlocked'
-    },
+import {PRESS_KEY, CHANGE_DISPLAY_BACKLIGHT, CHANGE_LOCKED_STATUS, CHANGE_DISPLAY_STATUS} from '../actions/actions';
 
-    displayStatusList: {
-        empty: '',
-        error: 'Error',
-        ready: 'Ready',
-        lock: 'Locking...',
-        unlock: 'Unlocking...',
-        service: 'Service',
-        validate: 'Validating...'
-    },
+const initialState = {
+    backgroundStatus: 'display__wrapper--active',
+    lockStatus: 'Unlocked',
+    displayStatus: 'Ready',
+    displayValue: '',
+};
 
-    backgroundStatus: '',
-    lockStatus: ' ',
-    displayStatus: ' '
-}, action) => {
-
+const displayReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "INIT":
+        case 'PRESS_KEY':
             state = {
                 ...state,
-                backgroundStatus: '',
-                lockStatus: 'Unlocked',
-                displayStatus: 'Ready'
+                displayStatus: action.payload.displayStatus,
+                displayValue: this.state.displayValue += action.payload.displayValue
+            };
+            break;
+        case 'CHANGE_DISPLAY_BACKLIGHT':
+            state = {
+                ...state,
+                backgroundStatus: action.payload
+            };
+            break;
+        case 'CHANGE_LOCKED_STATUS':
+            state = {
+                ...state,
+                lockStatus: action.payload
+            };
+            break;
+        case 'CHANGE_DISPLAY_STATUS':
+            state = {
+                ...state,
+                displayStatus: action.payload
             };
             break;
         default:
+            break;
     }
+    console.log(state); //Logging state to see changes
     return state;
-}
+};
+
 export default displayReducer;

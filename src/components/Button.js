@@ -7,7 +7,12 @@ class Button extends Component {
             symbol: this.props.content.symbol,
             value: this.props.content.value
         }
+
     }
+
+    // handleClick = e => {
+    //     e.target
+    // }
     render(){
        if(this.state.symbol === 'A' || this.state.symbol === 'B') {
           return (

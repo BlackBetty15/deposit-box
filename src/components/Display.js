@@ -1,65 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { changeLockedStatus, changeDisplayBacklight, changeDisplayStatus} from '../actions/actions';
 
 class Display extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         lockStatusList: {
-    //             0: 'Locked',
-    //             1: 'Unlocked'
-    //         },
-    //
-    //         displayStatusList: {
-    //             empty: '',
-    //             error: 'Error',
-    //             ready: 'Ready',
-    //             lock: 'Locking...',
-    //             unlock: 'Unlocking...',
-    //             service: 'Service',
-    //             validate: 'Validating...'
-    //         },
-    //
-    //         backgroundStatus: '',
-    //         lockStatus: '',
-    //         displayStatus: ''
-    //     }
-    // }
 
     componentDidMount() {
-         // this.setState({
-         //     lockStatus: this.props.lockStatusList[1],
-         //     displayStatus : this.props.displayStatusList.ready
-         // })
-        // store.dispatch("INIT");
-
+       setTimeout(this.changeBacklight,5000);
     }
+
+    changeBacklight = () => {
+       this.props.changeDisplayBacklight('');
+    };
 
     render(){
-        return (
-            <div className= {"display__wrapper " + this.props.backgroundStatus}>
-                <input className="display__input display__input--top text--regular" disabled={true} value={this.props.lockStatus} type="text"/>
-                <input className="display__input display__input--bottom text--large align--right" disabled={true} value={this.props.displayStatus} type="text"/>
-            </div>
-        );
+        if (this.props.displayValue === '' && this.props.displayStatus !==''){
+            return (
+                <div className= {"display__wrapper " + this.props.backgroundStatus}>
+                    <input className="display__input display__input--top text--regular" disabled={true} value={this.props.lockStatus} type="text"/>
+                    <input className="display__input display__input--bottom text--large align--right" disabled={true} value={this.props.displayStatus} type="text"/>
+                </div>
+            );
+        } else if (this.props.displayValue !== '' && this.props.displayStatus === ''){
+            return(
+                <div className= {"display__wrapper " + this.props.backgroundStatus}>
+                    <input className="display__input display__input--top text--regular" disabled={true} value={this.props.lockStatus} type="text"/>
+                    <input className="display__input display__input--bottom text--large align--right" disabled={true} value={this.props.displayValue    } type="text"/>
+                </div>
+            )
+        }
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        display: state.displayReducer
+const mapStateToProps = state => {
+    return  {
+        backgroundStatus : state.backgroundStatus,
+        lockStatus: state.lockStatus,
+        displayStatus: state.displayStatus,
+        displayValue: state.displayValue
     }
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-       Init: () => {
-           dispatch({
-               type: "INIT"
-           })
-       }
+        changeDisplayBacklight: (status) => dispatch({type: "CHANGE_DISPLAY_BACKLIGHT", payload:status})
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Display)
