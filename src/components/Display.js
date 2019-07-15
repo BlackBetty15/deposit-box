@@ -1,30 +1,65 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Display extends Component {
-    state = {
-        lockStatus: {
-            0: 'Locked',
-            1: 'Unlocked'
-        },
 
-        displayStatus: {
-            empty: '',
-            error: 'Error',
-            ready: 'Ready',
-            lock: 'Locking...',
-            unlock: 'Unlocking...',
-            service: 'Service',
-            validate: 'Validating...'
-        }
-    };
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         lockStatusList: {
+    //             0: 'Locked',
+    //             1: 'Unlocked'
+    //         },
+    //
+    //         displayStatusList: {
+    //             empty: '',
+    //             error: 'Error',
+    //             ready: 'Ready',
+    //             lock: 'Locking...',
+    //             unlock: 'Unlocking...',
+    //             service: 'Service',
+    //             validate: 'Validating...'
+    //         },
+    //
+    //         backgroundStatus: '',
+    //         lockStatus: '',
+    //         displayStatus: ''
+    //     }
+    // }
+
+    componentDidMount() {
+         // this.setState({
+         //     lockStatus: this.props.lockStatusList[1],
+         //     displayStatus : this.props.displayStatusList.ready
+         // })
+        // store.dispatch("INIT");
+
+    }
+
     render(){
         return (
-            <div className="display__wrapper">
-                <input className="display__input display__input--top text--regular" disabled={true} value={this.state.lockStatus["1"]} type="text"/>
-                <input className="display__input display__input--bottom text--large align--right" disabled={true} value={this.state.displayStatus.ready} type="text"/>
+            <div className= {"display__wrapper " + this.props.backgroundStatus}>
+                <input className="display__input display__input--top text--regular" disabled={true} value={this.props.lockStatus} type="text"/>
+                <input className="display__input display__input--bottom text--large align--right" disabled={true} value={this.props.displayStatus} type="text"/>
             </div>
         );
     }
 }
 
-export default Display;
+const mapStateToProps = (state) => {
+    return {
+        display: state.displayReducer
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+       Init: () => {
+           dispatch({
+               type: "INIT"
+           })
+       }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Display)

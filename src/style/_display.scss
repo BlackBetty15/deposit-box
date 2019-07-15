@@ -5,6 +5,10 @@
     border-radius: 5px;
     padding: 10px;
     box-sizing: border-box;
+
+    &--active {
+      background-color: $color-screen-on;
+    }
   }
 
   &__input {
