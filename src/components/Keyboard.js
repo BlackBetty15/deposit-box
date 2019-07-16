@@ -77,7 +77,7 @@ class Keyboard extends Component {
                     value: '7',
                     symbol: '',
                 }
-            ]
+            ].reverse()
         };
     }
 
@@ -85,7 +85,7 @@ class Keyboard extends Component {
         return (
             <div className="keyboard">
                 {
-                    this.state.button.reverse().map((item) =>
+                    this.state.button.map((item) =>
                     <Button key={item.id} content={item} />)
                 }
             </div>

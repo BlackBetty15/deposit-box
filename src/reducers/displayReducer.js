@@ -1,19 +1,19 @@
-import {PRESS_KEY, CHANGE_DISPLAY_BACKLIGHT, CHANGE_LOCKED_STATUS, CHANGE_DISPLAY_STATUS} from '../actions/actions';
 
-const initialState = {
+const initialStateDisplay = {
     backgroundStatus: 'display__wrapper--active',
     lockStatus: 'Unlocked',
     displayStatus: 'Ready',
     displayValue: '',
+    savedCode: '',
 };
 
-const displayReducer = (state = initialState, action) => {
+const displayReducer = (state = initialStateDisplay, action) => {
     switch (action.type) {
         case 'PRESS_KEY':
             state = {
                 ...state,
                 displayStatus: action.payload.displayStatus,
-                displayValue: this.state.displayValue += action.payload.displayValue
+                displayValue: state.displayValue += action.payload.displayValue
             };
             break;
         case 'CHANGE_DISPLAY_BACKLIGHT':
@@ -34,10 +34,16 @@ const displayReducer = (state = initialState, action) => {
                 displayStatus: action.payload
             };
             break;
+        case 'CLEAR_VALUE':
+            state = {
+                ...state,
+                savedCode: state.displayValue,
+                displayValue: ''
+            };
+            break;
         default:
             break;
     }
-    console.log(state); //Logging state to see changes
     return state;
 };
 

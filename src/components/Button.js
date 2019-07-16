@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {pressKey} from '../actions/actions';
 import { connect } from 'react-redux';
 
 class Button extends Component {
@@ -7,14 +6,19 @@ class Button extends Component {
         super(props);
         this.state = {
             symbol: this.props.content.symbol,
-            value: this.props.content.value
+            value: this.props.content.value,
         }
 
     }
 
+    // componentDidUpdate() {
+    //     // this.props.stopTimer();
+    // }
+
     handleClick = e => {
-        console.log('event triggered!');
-        pressKey({displayStatus: '', displayValue: this.state.value});
+        this.props.pressKey({displayStatus: '', displayValue: this.state.value});
+        this.props.stopTimer();
+        this.props.startTimer();
     };
 
     render(){
@@ -43,7 +47,12 @@ class Button extends Component {
 }
 const mapStateToProps = (state) => state;
 
-const mapDispatchToProps = {
-    ...pressKey
+const mapDispatchToProps = dispatch => {
+    return {
+        pressKey: (payload) => dispatch({type: "PRESS_KEY", payload:payload}),
+        startTimer:() => dispatch({type: "START_TIMER", payload: { actionName: 'PROCESS_INPUT', timerName: 'buttonTimer'}}),
+        stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}})
+
+    }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Button);
