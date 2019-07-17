@@ -1,9 +1,6 @@
 
 const initialStateValidation = {
     locked: false,
-    validationCode: '',
-    savedCode: '',
-    validationStatus: '',
     initializeLock: false,
     initializeCheck: false,
     serial: '4815162342'
@@ -14,7 +11,7 @@ const validationReducer = (state = initialStateValidation, action) => {
         case "PROCESS_INPUT":
            let lockInit = false;
            let checkInit = false;
-           if(state.savedCode === '' && state.locked === false) {
+           if(state.locked === false) {
                 lockInit = true;
                 checkInit = false;
            } else {
@@ -28,11 +25,10 @@ const validationReducer = (state = initialStateValidation, action) => {
                 initializeLock: lockInit,
             };
            break;
-        case "SAVE_PASSCODE":
+        case "LOCK":
 
             state = {
                 ...state,
-                savedCode: action.payload,
                 locked: true
             };
             break;

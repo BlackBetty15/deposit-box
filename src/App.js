@@ -5,9 +5,14 @@ import connect from "react-redux/es/connect/connect";
 
 class App extends Component {
     componentDidUpdate(prevProps, prevState) {
-        if(this.props.initializeLock === true) {
-            this.props.changeLockStatus('Locked');
-            // this.props.changeDisplayStatus('Saved');
+        if(this.props.initializeLock === true && this.props.initializeLock !== prevProps.initializeLock) {
+            this.props.stopTimer();
+            this.props.storePassCode();
+            this.props.changeDisplayStatus('Locking...');
+            setTimeout(() => {
+                this.props.changeDisplayStatus('');
+                this.props.changeLockStatus('Locked');
+            },3000);
         }
     };
 
@@ -39,7 +44,9 @@ const mapDispatchToProps = dispatch => {
         changeDisplayBacklight: (status) => dispatch({type: "CHANGE_DISPLAY_BACKLIGHT", payload:status}),
         changeLockStatus: (status) => dispatch({type: "CHANGE_LOCKED_STATUS",payload: status}),
         changeDisplayStatus: (status) => dispatch({type: "CHANGE_DISPLAY_STATUS",payload: status}),
-        stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}})
+        stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}}),
+        storePassCode: () => dispatch({type: "SAVE_PASSCODE"}),
+
     }
 };
 

@@ -1,6 +1,6 @@
 
 const initialStateDisplay = {
-    backgroundStatus: 'display__wrapper--active',
+    backgroundStatus: '',
     lockStatus: 'Unlocked',
     displayStatus: 'Ready',
     displayValue: '',
@@ -10,10 +10,20 @@ const initialStateDisplay = {
 const displayReducer = (state = initialStateDisplay, action) => {
     switch (action.type) {
         case 'PRESS_KEY':
+            let status;
+            let value;
+            if(state.displayStatus !== 'Locking...') {
+                status = action.payload.displayStatus;
+                value = action.payload.displayValue;
+            } else {
+                status = state.displayStatus;
+                value = '';
+            }
+
             state = {
                 ...state,
-                displayStatus: action.payload.displayStatus,
-                displayValue: state.displayValue += action.payload.displayValue
+                displayStatus: status,
+                displayValue: state.displayValue += value
             };
             break;
         case 'CHANGE_DISPLAY_BACKLIGHT':
@@ -34,7 +44,7 @@ const displayReducer = (state = initialStateDisplay, action) => {
                 displayStatus: action.payload
             };
             break;
-        case 'CLEAR_VALUE':
+        case 'SAVE_PASSCODE':
             state = {
                 ...state,
                 savedCode: state.displayValue,
@@ -44,6 +54,7 @@ const displayReducer = (state = initialStateDisplay, action) => {
         default:
             break;
     }
+    console.log(state);
     return state;
 };
 

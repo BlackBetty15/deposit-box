@@ -11,14 +11,13 @@ class Button extends Component {
 
     }
 
-    // componentDidUpdate() {
-    //     // this.props.stopTimer();
-    // }
-
     handleClick = e => {
         this.props.pressKey({displayStatus: '', displayValue: this.state.value});
         this.props.stopTimer();
         this.props.startTimer();
+        this.props.stopBacklightTimer();
+        this.props.changeDisplayBacklight('display__wrapper--active');
+        this.props.startBacklightTimer();
     };
 
     render(){
@@ -50,8 +49,11 @@ const mapStateToProps = (state) => state;
 const mapDispatchToProps = dispatch => {
     return {
         pressKey: (payload) => dispatch({type: "PRESS_KEY", payload:payload}),
-        startTimer:() => dispatch({type: "START_TIMER", payload: { actionName: 'PROCESS_INPUT', timerName: 'buttonTimer'}}),
-        stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}})
+        startTimer:() => dispatch({type: "START_TIMER", payload: { actionName: 'PROCESS_INPUT', timerName: 'buttonTimer',timerPeriod: 1.2}}),
+        stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}}),
+        startBacklightTimer:() => dispatch({type: "START_TIMER", payload: { actionName: 'CHANGE_DISPLAY_BACKLIGHT', actionPayload: {}, timerName: 'backlightTimer',timerPeriod: 5}}),
+        stopBacklightTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'backlightTimer'}}),
+        changeDisplayBacklight: (status) => dispatch({type: "CHANGE_DISPLAY_BACKLIGHT", payload:status})
 
     }
 };
