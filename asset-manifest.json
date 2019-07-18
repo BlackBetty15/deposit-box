@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/deposit-box/static/css/main.786fdd46.chunk.css",
+    "main.js": "/deposit-box/static/js/main.2ee1a61b.chunk.js",
+    "main.js.map": "/deposit-box/static/js/main.2ee1a61b.chunk.js.map",
+    "runtime~main.js": "/deposit-box/static/js/runtime~main.b9062fa1.js",
+    "runtime~main.js.map": "/deposit-box/static/js/runtime~main.b9062fa1.js.map",
+    "static/js/2.632498a0.chunk.js": "/deposit-box/static/js/2.632498a0.chunk.js",
+    "static/js/2.632498a0.chunk.js.map": "/deposit-box/static/js/2.632498a0.chunk.js.map",
+    "index.html": "/deposit-box/index.html",
+    "precache-manifest.b2d9d870943187a76f882f74b642dd33.js": "/deposit-box/precache-manifest.b2d9d870943187a76f882f74b642dd33.js",
+    "service-worker.js": "/deposit-box/service-worker.js",
+    "static/css/main.786fdd46.chunk.css.map": "/deposit-box/static/css/main.786fdd46.chunk.css.map"
+  }
+}
