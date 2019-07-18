@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="915242ca-415a-4ecc-a1bc-f5e608d68474" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Display.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Display.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/displayReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/displayReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/validationReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/validationReducer.js" afterDir="false" />
-    </list>
+    <list default="true" id="915242ca-415a-4ecc-a1bc-f5e608d68474" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +12,7 @@
     <session id="1250441263">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.2" value="1" />
@@ -264,7 +259,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../non-cms/marketing-site" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
@@ -301,16 +296,15 @@
       <workItem from="1563261806047" duration="7963000" />
       <workItem from="1563303114017" duration="16836000" />
       <workItem from="1563347251871" duration="5396000" />
-      <workItem from="1563381587339" duration="30395000" />
+      <workItem from="1563381587339" duration="31345000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111584000" />
+    <option name="totallyTimeSpent" value="112534000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="55" y="25" width="1865" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="npm" order="1" side_tool="true" />
