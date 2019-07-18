@@ -6,45 +6,58 @@ import connect from "react-redux/es/connect/connect";
 class App extends Component {
     componentDidUpdate(prevProps, prevState) {
         if(this.props.initializeLock === true && this.props.initializeLock !== prevProps.initializeLock) {
-            this.props.storePassCode();
-            this.props.changeDisplayStatus('Locking...');
-            setTimeout(() => {
-                this.props.changeDisplayStatus('');
-                this.props.changeLockStatus('Locked');
-                this.props.lockApp();
-            },3000);
+            this.lockHandler();
         } else if(this.props.initializeCheck === true && this.props.initializeCheck !== prevProps.initializeCheck) {
-            this.props.changeDisplayStatus('Validating...');
-            setTimeout(() => {
-                this.props.validateInput();
-            },500);
-
+           this.validationRequestHandler();
         } else if(this.props.error === true && this.props.error !== prevProps.error) {
-            this.props.changeDisplayStatus('Error');
+            this.errorHandler();
         } else if (this.props.locked && this.props.matching) {
-            this.props.changeDisplayStatus('Unlocking...');
-            setTimeout(() => {
-                 this.props.clearValue();
-                 this.props.changeDisplayStatus('Ready');
-                 this.props.changeLockStatus('Unlocked');
-                 this.props.unlockApp();
-            },3000);
+            this.unlockHandler();
         } else if(this.props.initializeReLock === true && this.props.initializeReLock !== prevProps.initializeReLock) {
-            this.props.changeDisplayStatus('Validating...');
-            setTimeout(() => {
-                this.props.validateInput();
-            },500);
+            this.validationRequestHandler();
         } else if (this.props.initializeReLock && this.props.matching) {
-            this.props.changeDisplayStatus('Locking...');
-            setTimeout(() => {
-                this.props.changeDisplayStatus('');
-                this.props.changeLockStatus('Locked');
-                this.props.lockApp();
-                this.props.clearValue();
-            },3000);
+            this.relockHandler();
         }
     };
 
+    lockHandler = () => {
+        this.props.storePassCode();
+        this.props.changeDisplayStatus('Locking...');
+        setTimeout(() => {
+            this.props.changeDisplayStatus('');
+            this.props.changeLockStatus('Locked');
+            this.props.lockApp();
+        },3000);
+    };
+    unlockHandler = () => {
+        this.props.changeDisplayStatus('Unlocking...');
+        setTimeout(() => {
+            this.props.clearValue();
+            this.props.changeDisplayStatus('Ready');
+            this.props.changeLockStatus('Unlocked');
+            this.props.unlockApp();
+        },3000);
+    };
+    relockHandler = () => {
+        this.props.changeDisplayStatus('Locking...');
+        setTimeout(() => {
+            this.props.changeDisplayStatus('');
+            this.props.changeLockStatus('Locked');
+            this.props.lockApp();
+            this.props.clearValue();
+        },3000);
+    };
+    errorHandler = () => {
+        this.props.changeDisplayStatus('Error');
+        this.props.clearValue();
+    };
+    validationRequestHandler = () => {
+        this.props.changeDisplayStatus('Validating...');
+        setTimeout(() => {
+            this.props.validateInput();
+        },500);
+    };
+    masterHandler = () => {};
   render() {
     return (
       <div className="content">
