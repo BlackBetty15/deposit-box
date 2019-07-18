@@ -6,7 +6,8 @@ const initialStateDisplay = {
     displayStatus: 'Ready',
     displayValue: '',
     savedCode: '',
-    validationRequest: false
+    validationRequest: false,
+    APIRequest: false,
 };
 
 const displayReducer = (state = initialStateDisplay, action) => {
@@ -66,9 +67,18 @@ const displayReducer = (state = initialStateDisplay, action) => {
             state = {
                 ...state,
                 displayValue: '',
-                validationRequest: false
+                validationRequest: false,
+                savedCode: '',
+                APIRequest: false
             };
             break;
+        case "REQUEST_API":
+            state = {
+                ...state,
+                APIRequest: true
+            };
+            break;
+        case "MASTER_RESET":
         default:
             break;
     }

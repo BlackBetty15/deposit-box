@@ -11,6 +11,10 @@ class Display extends Component {
         if(this.props.savedCode !== '' && prevProps.savedCode !== this.props.savedCode) {
                 this.props.sendPassCode(this.props.savedCode);
         }
+
+        if(this.props.APIRequest && prevProps.APIRequest !== this.props.APIRequest) {
+            this.props.sendAPICode(this.props.displayValue);
+        }
     }
 
     render(){
@@ -48,18 +52,19 @@ const mapStateToProps = state => {
         savedCode: state.displayReducer.savedCode,
         error: state.displayReducer.error,
         unlockInit: state.displayReducer.unlockInit,
-        validationRequest: state.displayReducer.validationRequest
+        validationRequest: state.displayReducer.validationRequest,
+        APIRequest: state.displayReducer.APIRequest
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         changeDisplayBacklight: (status) => dispatch({type: "CHANGE_DISPLAY_BACKLIGHT", payload:status}),
-        // storePassCode: (code) => dispatch({type: "SAVE_PASSCODE"}),
         startBacklightTimer:() => dispatch({type: "START_TIMER", payload: { actionName: 'CHANGE_DISPLAY_BACKLIGHT', actionPayload: {}, timerName: 'backlightTimer',timerInterval: 5}}),
         stopBacklightTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'backlightTimer'}}),
-        sendPassCode: (payload) => dispatch ({type: "SAVE_CODE", payload: payload}),
-        sendValidationParam: (payload) => dispatch ({type: "VALIDATION", payload: payload}),
+        sendPassCode: (payload) => dispatch({type: "SAVE_CODE", payload: payload}),
+        sendValidationParam: (payload) => dispatch({type: "VALIDATION", payload: payload}),
+        sendAPICode: (payload) => dispatch({type:"GET_API_CODE",payload: payload})
     }
 };
 

@@ -4,11 +4,13 @@ const initialStateValidation = {
     initializeLock: false,
     initializeReLock: false,
     initializeCheck: false,
+    initializeAPI: false,
     lockCode: '',
     serial: '4815162342',
     matching: false,
     error: false,
     masterCode: false,
+    serviceCode: ''
 };
 
 const validationReducer = (state = initialStateValidation, action) => {
@@ -17,20 +19,19 @@ const validationReducer = (state = initialStateValidation, action) => {
            let lockInit = false;
            let relockInit = false;
            let checkInit = false;
+           let initAPI = false;
 
-           if (!state.locked && state.lockCode !== '') {
-               lockInit = false;
-               checkInit = false;
-               relockInit = true;
+           if(!state.masterCode) {
+               if (!state.locked && state.lockCode !== '') {
+                   relockInit = true;
 
-           } else if (state.locked === false){
-               lockInit = true;
-               checkInit = false;
-               relockInit = false;
+               } else if (state.locked === false){
+                   lockInit = true;
+               } else {
+                   checkInit = true;
+               }
            } else {
-               lockInit = false;
-               checkInit = true;
-               relockInit = false;
+               initAPI = true;
            }
 
            state = {
@@ -38,10 +39,19 @@ const validationReducer = (state = initialStateValidation, action) => {
                 initializeCheck: checkInit,
                 initializeLock: lockInit,
                 initializeReLock: relockInit,
+                initializeAPI: initAPI,
                 error: false,
                 matching: false
             };
            break;
+        case "UNSET_REQUEST":
+            state = {
+                ...state,
+                initializeLock: false,
+                initializeCheck: false,
+                initializeReLock: false
+            };
+            break;
         case "LOCK":
             state = {
                 ...state,
@@ -63,18 +73,15 @@ const validationReducer = (state = initialStateValidation, action) => {
             state = {
                 ...state,
                 lockCode: action.payload
-            }
+            };
         break;
         case "VALIDATION": {
             let matching;
             let error;
             let master;
-            console.log('Validation started!');
             if(state.locked && state.lockCode !== '') {
                 //Unlocking and master unlock matching
-                console.log(state.lockCode);
                 if(state.lockCode === action.payload){
-                    console.log('matching!');
                     error = false;
                     master = false;
                     matching = true;
@@ -108,6 +115,12 @@ const validationReducer = (state = initialStateValidation, action) => {
             }
         };
         break;
+        case "GET_API_CODE":
+            state = {
+                ...state,
+                serviceCode: action.payload
+            };
+            break;
         default:
             break;
     }

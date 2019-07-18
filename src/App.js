@@ -4,6 +4,7 @@ import Display from './components/Display';
 import connect from "react-redux/es/connect/connect";
 
 class App extends Component {
+
     componentDidUpdate(prevProps, prevState) {
         if(this.props.initializeLock === true && this.props.initializeLock !== prevProps.initializeLock) {
             this.lockHandler();
@@ -17,6 +18,13 @@ class App extends Component {
             this.validationRequestHandler();
         } else if (this.props.initializeReLock && this.props.matching) {
             this.relockHandler();
+        } else if (this.props.masterCode && prevProps.masterCode !== this.props.masterCode) {
+            this.serviceHandler();
+        } else if (this.props.initializeAPI && this.props.serviceCode === '') {
+            this.props.requestInput();
+            console.log('pitaj api');
+        } else if (this.props.initializeAPI && this.props.serviceCode !== '') {
+            this.masterHandler();
         }
     };
 
@@ -29,6 +37,7 @@ class App extends Component {
             this.props.lockApp();
         },3000);
     };
+
     unlockHandler = () => {
         this.props.changeDisplayStatus('Unlocking...');
         setTimeout(() => {
@@ -38,6 +47,7 @@ class App extends Component {
             this.props.unlockApp();
         },3000);
     };
+
     relockHandler = () => {
         this.props.changeDisplayStatus('Locking...');
         setTimeout(() => {
@@ -47,17 +57,39 @@ class App extends Component {
             this.props.clearValue();
         },3000);
     };
+
     errorHandler = () => {
         this.props.changeDisplayStatus('Error');
         this.props.clearValue();
+        this.props.unsetRequests();
     };
+
     validationRequestHandler = () => {
         this.props.changeDisplayStatus('Validating...');
         setTimeout(() => {
             this.props.validateInput();
         },500);
     };
-    masterHandler = () => {};
+
+    serviceHandler = () => {
+        this.props.changeDisplayStatus('Service');
+        this.props.clearValue();
+    };
+
+    masterHandler = () => {
+        this.props.clearValue();
+        this.props.changeDisplayStatus('Validating...');
+        fetch('https://9w4qucosgf.execute-api.eu-central-1.amazonaws.com/default/CR-JS_team_M02a?code='+this.props.serviceCode)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.sn);
+                if(data.sn === this.props.serial) {
+                    this.props.masterReset();
+                } else {
+                    this.props.changeDisplayStatus('');
+                }
+            });
+    };
   render() {
     return (
       <div className="content">
@@ -79,7 +111,9 @@ const mapStateToProps = state => {
         serial: state.validationReducer.serial,
         error: state.validationReducer.error,
         matching: state.validationReducer.matching,
-        masterCode: state.validationReducer.masterCode
+        masterCode: state.validationReducer.masterCode,
+        initializeAPI: state.validationReducer.initializeAPI,
+        serviceCode: state.validationReducer,
     }
 };
 
@@ -94,6 +128,9 @@ const mapDispatchToProps = dispatch => {
         lockApp: () => dispatch({type: "LOCK"}),
         unlockApp: () => dispatch({type: "UNLOCK"}),
         clearValue: () => dispatch({type: "CLEAR"}),
+        unsetRequests: () => dispatch({type: "UNSET_REQUEST"}),
+        requestInput: () => dispatch({type: "GET_API_CODE"}),
+        masterReset: () => dispatch({type: "MASTER_RESET"})
     }
 };
 
