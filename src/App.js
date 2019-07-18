@@ -6,12 +6,41 @@ import connect from "react-redux/es/connect/connect";
 class App extends Component {
     componentDidUpdate(prevProps, prevState) {
         if(this.props.initializeLock === true && this.props.initializeLock !== prevProps.initializeLock) {
-            this.props.stopTimer();
             this.props.storePassCode();
             this.props.changeDisplayStatus('Locking...');
             setTimeout(() => {
                 this.props.changeDisplayStatus('');
                 this.props.changeLockStatus('Locked');
+                this.props.lockApp();
+            },3000);
+        } else if(this.props.initializeCheck === true && this.props.initializeCheck !== prevProps.initializeCheck) {
+            this.props.changeDisplayStatus('Validating...');
+            setTimeout(() => {
+                this.props.validateInput();
+            },500);
+
+        } else if(this.props.error === true && this.props.error !== prevProps.error) {
+            this.props.changeDisplayStatus('Error');
+        } else if (this.props.locked && this.props.matching) {
+            this.props.changeDisplayStatus('Unlocking...');
+            setTimeout(() => {
+                 this.props.clearValue();
+                 this.props.changeDisplayStatus('Ready');
+                 this.props.changeLockStatus('Unlocked');
+                 this.props.unlockApp();
+            },3000);
+        } else if(this.props.initializeReLock === true && this.props.initializeReLock !== prevProps.initializeReLock) {
+            this.props.changeDisplayStatus('Validating...');
+            setTimeout(() => {
+                this.props.validateInput();
+            },500);
+        } else if (this.props.initializeReLock && this.props.matching) {
+            this.props.changeDisplayStatus('Locking...');
+            setTimeout(() => {
+                this.props.changeDisplayStatus('');
+                this.props.changeLockStatus('Locked');
+                this.props.lockApp();
+                this.props.clearValue();
             },3000);
         }
     };
@@ -30,12 +59,14 @@ class App extends Component {
 const mapStateToProps = state => {
     return  {
         locked: state.validationReducer.locked,
-        validationCode: state.validationReducer.validationCode,
-        savedCode: state.validationReducer.savedCode,
-        validationStatus: state.validationReducer.validationStatus,
         initializeLock: state.validationReducer.initializeLock,
+        initializeReLock: state.validationReducer.initializeReLock,
         initializeCheck: state.validationReducer.initializeCheck,
+        lockCode: state.validationReducer.lockCode,
         serial: state.validationReducer.serial,
+        error: state.validationReducer.error,
+        matching: state.validationReducer.matching,
+        masterCode: state.validationReducer.masterCode
     }
 };
 
@@ -46,7 +77,10 @@ const mapDispatchToProps = dispatch => {
         changeDisplayStatus: (status) => dispatch({type: "CHANGE_DISPLAY_STATUS",payload: status}),
         stopTimer: () => dispatch({ type: "STOP_TIMER", payload: { timerName: 'buttonTimer'}}),
         storePassCode: () => dispatch({type: "SAVE_PASSCODE"}),
-
+        validateInput: () => dispatch({type: "VALIDATE_INPUT"}),
+        lockApp: () => dispatch({type: "LOCK"}),
+        unlockApp: () => dispatch({type: "UNLOCK"}),
+        clearValue: () => dispatch({type: "CLEAR"}),
     }
 };
 
